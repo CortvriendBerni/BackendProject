@@ -9,6 +9,6 @@ namespace Formula1.Models
         [Key]
         public int TeamId { get; set; }
         public string TeamName { get; set; }
-        public List<TeamDriver> Drivers { get; set; }
+        public ICollection<Driver> Drivers { get; set; }
     }
 }

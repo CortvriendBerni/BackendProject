@@ -37,6 +37,8 @@ namespace Formula1.Data
             modelBuilder.Entity<Driver>().HasOne<Ranking>(s => s.Rank).WithOne(ad => ad.Driver).HasForeignKey<Ranking>(ad => ad.DriverId);
             modelBuilder.Entity<Ranking>().HasOne<Driver>(ad => ad.Driver).WithOne(s => s.Rank).HasForeignKey<Ranking>(ad => ad.DriverId);
 
+            modelBuilder.Entity<Driver>().HasOne<Team>(s => s.Team).WithMany(g => g.Drivers).HasForeignKey(s => s.TeamId);
+
             // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 33, DriverName = "Max Verstappen", Age = 23, Country = "Netherlands", Team = "Red Bull Racing"});
             // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 11, DriverName = "Sergio Perez", Age = 31, Country = "Mexico", Team = "Red Bull Racing"});
             // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 55, DriverName = "Carlos Sainz", Age = 26, Country = "Spain", Team = "Ferrari"});
@@ -58,26 +60,26 @@ namespace Formula1.Data
             // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 47, DriverName = "Mick Schumacher", Age = 22, Country = "Germany", Team = "Haas F1 Team"});
             // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 9, DriverName = "Nikita Mazepin", Age = 22, Country = "Russia", Team = "Haas F1 Team"});
 
-            var maxVerstappen = new Driver(){DriverId = 33, DriverName = "Max Verstappen", Age = 23, Country = "Netherlands", Team = "Red Bull Racing"};
-            var carlosSainz = new Driver(){DriverId = 55, DriverName = "Carlos Sainz", Age = 26, Country = "Spain", Team = "Ferrari"};
-            var charlesLeclerc = new Driver(){DriverId = 16, DriverName = "Charles Leclerc", Age = 23, Country = "Monaco", Team = "Ferrari"};
-            var landoNorris = new Driver(){DriverId = 4, DriverName = "Lando Norris", Age = 21, Country = "United Kingdom", Team = "McLaren"};
-            var danielRicciardo = new Driver(){DriverId = 3, DriverName = "Daniel Ricciardo", Age = 31, Country = "Australia", Team = "McLaren"};
-            var lewisHamilton = new Driver(){DriverId = 44, DriverName = "Lewis Hamilton", Age = 36, Country = "United Kingdom", Team = "Mercedes"};
-            var valtteriBottas = new Driver(){DriverId = 77, DriverName = "Valtteri Bottas", Age = 31, Country = "Finland", Team = "Mercedes"};
-            var pierreGasly = new Driver(){DriverId = 10, DriverName = "Pierre Gasly", Age = 25, Country = "France", Team = "AlphaTauri"};
-            var yukiTsunoda = new Driver(){DriverId = 22, DriverName = "Yuki Tsunoda", Age = 20, Country = "Japan", Team = "AlphaTauri"};
-            var lanceStroll = new Driver(){DriverId = 18, DriverName = "Lance Stroll", Age = 25, Country = "France", Team = "Aston Martin"};
-            var sebastianVettel = new Driver(){DriverId = 5, DriverName = "Sebastian Vettal", Age = 33, Country = "Germany", Team = "Aston Martin"};
-            var estebanOcon = new Driver(){DriverId = 31, DriverName = "Esteban Ocon", Age = 24, Country = "France", Team = "Alpine"};
-            var fernandoAlonse = new Driver(){DriverId = 14, DriverName = "Fernando Alonso", Age = 39, Country = "Spain", Team = "Alpine"};
-            var kimiRaikkonen = new Driver(){DriverId = 7, DriverName = "Kimi Räikkönen", Age = 41, Country = "Finland", Team = "Alfa Romeo Racing"};
-            var antonioGiovinazzi = new Driver(){DriverId = 99, DriverName = "Antonio Giovinazzi", Age = 27, Country = "Italy", Team = "Alfa Romeo Racing"};
-            var nacholasLatifi = new Driver(){DriverId = 6, DriverName = "Nicholas Latifi", Age = 25, Country = "Canada", Team = "Williams"};
-            var georgeRussel = new Driver(){DriverId = 63, DriverName = "Goerge Russel", Age = 23, Country = "United Kingdom", Team = "Williams"};
-            var mickSchumacher = new Driver(){DriverId = 47, DriverName = "Mick Schumacher", Age = 22, Country = "Germany", Team = "Haas F1 Team"};
-            var nikitaMazepin = new Driver(){DriverId = 9, DriverName = "Nikita Mazepin", Age = 22, Country = "Russia", Team = "Haas F1 Team"};
-            var sergioPerez = new Driver(){DriverId = 11, DriverName = "Sergio Perez", Age = 31, Country = "Mexico", Team = "Red Bull Racing"};
+            var maxVerstappen = new Driver(){DriverId = 33, DriverName = "Max Verstappen", Age = 23, Country = "Netherlands", TeamId = 1};
+            var carlosSainz = new Driver(){DriverId = 55, DriverName = "Carlos Sainz", Age = 26, Country = "Spain", TeamId = 2};
+            var charlesLeclerc = new Driver(){DriverId = 16, DriverName = "Charles Leclerc", Age = 23, Country = "Monaco", TeamId = 2};
+            var landoNorris = new Driver(){DriverId = 4, DriverName = "Lando Norris", Age = 21, Country = "United Kingdom", TeamId = 4};
+            var danielRicciardo = new Driver(){DriverId = 3, DriverName = "Daniel Ricciardo", Age = 31, Country = "Australia", TeamId = 4};
+            var lewisHamilton = new Driver(){DriverId = 44, DriverName = "Lewis Hamilton", Age = 36, Country = "United Kingdom", TeamId = 3};
+            var valtteriBottas = new Driver(){DriverId = 77, DriverName = "Valtteri Bottas", Age = 31, Country = "Finland", TeamId = 3};
+            var pierreGasly = new Driver(){DriverId = 10, DriverName = "Pierre Gasly", Age = 25, Country = "France", TeamId = 7};
+            var yukiTsunoda = new Driver(){DriverId = 22, DriverName = "Yuki Tsunoda", Age = 20, Country = "Japan", TeamId = 7};
+            var lanceStroll = new Driver(){DriverId = 18, DriverName = "Lance Stroll", Age = 25, Country = "France", TeamId = 10};
+            var sebastianVettel = new Driver(){DriverId = 5, DriverName = "Sebastian Vettal", Age = 33, Country = "Germany", TeamId = 10};
+            var estebanOcon = new Driver(){DriverId = 31, DriverName = "Esteban Ocon", Age = 24, Country = "France", TeamId = 8};
+            var fernandoAlonse = new Driver(){DriverId = 14, DriverName = "Fernando Alonso", Age = 39, Country = "Spain", TeamId = 1};
+            var kimiRaikkonen = new Driver(){DriverId = 7, DriverName = "Kimi Räikkönen", Age = 41, Country = "Finland", TeamId = 9};
+            var antonioGiovinazzi = new Driver(){DriverId = 99, DriverName = "Antonio Giovinazzi", Age = 27, Country = "Italy", TeamId = 9};
+            var nacholasLatifi = new Driver(){DriverId = 6, DriverName = "Nicholas Latifi", Age = 25, Country = "Canada", TeamId = 6};
+            var georgeRussel = new Driver(){DriverId = 63, DriverName = "Goerge Russel", Age = 23, Country = "United Kingdom", TeamId = 6};
+            var mickSchumacher = new Driver(){DriverId = 47, DriverName = "Mick Schumacher", Age = 22, Country = "Germany", TeamId = 5};
+            var nikitaMazepin = new Driver(){DriverId = 9, DriverName = "Nikita Mazepin", Age = 22, Country = "Russia", TeamId = 5};
+            var sergioPerez = new Driver(){DriverId = 11, DriverName = "Sergio Perez", Age = 31, Country = "Mexico", TeamId = 1};
 
             modelBuilder.Entity<Driver>().HasData(maxVerstappen, carlosSainz, charlesLeclerc, landoNorris, danielRicciardo, lewisHamilton, valtteriBottas, pierreGasly, yukiTsunoda, lanceStroll, sebastianVettel, estebanOcon, fernandoAlonse, kimiRaikkonen, antonioGiovinazzi, nacholasLatifi, georgeRussel, mickSchumacher, nikitaMazepin, sergioPerez);
 
@@ -112,16 +114,29 @@ namespace Formula1.Data
             modelBuilder.Entity<Circuit>().HasData(new Circuit(){CircuitId = "istanbul", CircuitName = "Istanbul Park", Country = "Turkey", Url= "https://f1-circuits.nl/istanbul-park/"});
             modelBuilder.Entity<Circuit>().HasData(new Circuit(){CircuitId = "jeddah", CircuitName = "Jeddah Street Circuit", Country = "Saudi Arabia", Url= "https://f1-circuits.nl/jeddah-street/"});
 
-            modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 1, TeamName = "Redd Bull Racing"});
-            modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 2, TeamName = "Ferrari"});
-            modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 3, TeamName = "Mercedes"});
-            modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 4, TeamName = "McLaren"});
-            modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 5, TeamName = "Haas F1 Team"});
-            modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 6, TeamName = "Williams"});
-            modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 7, TeamName = "AlphaTauri"});
-            modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 8, TeamName = "Alpine"});
-            modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 9, TeamName = "Alfa Romeo Racing"});
-            modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 10, TeamName = "Aston Martin"});
+            // modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 1, TeamName = "Redd Bull Racing"});
+            // modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 2, TeamName = "Ferrari"});
+            // modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 3, TeamName = "Mercedes"});
+            // modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 4, TeamName = "McLaren"});
+            // modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 5, TeamName = "Haas F1 Team"});
+            // modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 6, TeamName = "Williams"});
+            // modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 7, TeamName = "AlphaTauri"});
+            // modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 8, TeamName = "Alpine"});
+            // modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 9, TeamName = "Alfa Romeo Racing"});
+            // modelBuilder.Entity<Team>().HasData(new Team(){TeamId = 10, TeamName = "Aston Martin"});
+
+            var redbull = new Team(){TeamId = 1, TeamName = "Redd Bull Racing"};
+            var ferrari = new Team(){TeamId = 2, TeamName = "Ferrari"};
+            var mercedes = new Team(){TeamId = 3, TeamName = "Mercedes"};
+            var mclaren = new Team(){TeamId = 4, TeamName = "McLaren"};
+            var haas = new Team(){TeamId = 5, TeamName = "Haas F1 Team"};
+            var williams = new Team(){TeamId = 6, TeamName = "Williams"};
+            var alphaTauri = new Team(){TeamId = 7, TeamName = "AlphaTauri"};
+            var alpine = new Team(){TeamId = 8, TeamName = "Alpine"};
+            var alfaRomeo = new Team(){TeamId = 9, TeamName = "Alfa Romeo Racing"};
+            var astonMartin = new Team(){TeamId = 10, TeamName = "Aston Martin"};
+
+            modelBuilder.Entity<Team>().HasData(redbull, ferrari, mercedes, mclaren, haas, williams, alphaTauri, alpine, alfaRomeo, astonMartin);
 
 
             modelBuilder.Entity<Ranking>().HasData(new Ranking(){Place = 1, DriverId = 44, Points = 44});

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Formula1.Migrations
 {
     [DbContext(typeof(FormulaContext))]
-    [Migration("20210428130816_Rankingtest")]
-    partial class Rankingtest
+    [Migration("20210428135125_TeamDriver Test")]
+    partial class TeamDriverTest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -268,10 +268,12 @@ namespace Formula1.Migrations
                     b.Property<string>("DriverName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Team")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
 
                     b.HasKey("DriverId");
+
+                    b.HasIndex("TeamId");
 
                     b.ToTable("Drivers");
 
@@ -282,7 +284,7 @@ namespace Formula1.Migrations
                             Age = 23,
                             Country = "Netherlands",
                             DriverName = "Max Verstappen",
-                            Team = "Red Bull Racing"
+                            TeamId = 1
                         },
                         new
                         {
@@ -290,7 +292,7 @@ namespace Formula1.Migrations
                             Age = 26,
                             Country = "Spain",
                             DriverName = "Carlos Sainz",
-                            Team = "Ferrari"
+                            TeamId = 2
                         },
                         new
                         {
@@ -298,7 +300,7 @@ namespace Formula1.Migrations
                             Age = 23,
                             Country = "Monaco",
                             DriverName = "Charles Leclerc",
-                            Team = "Ferrari"
+                            TeamId = 2
                         },
                         new
                         {
@@ -306,7 +308,7 @@ namespace Formula1.Migrations
                             Age = 21,
                             Country = "United Kingdom",
                             DriverName = "Lando Norris",
-                            Team = "McLaren"
+                            TeamId = 4
                         },
                         new
                         {
@@ -314,7 +316,7 @@ namespace Formula1.Migrations
                             Age = 31,
                             Country = "Australia",
                             DriverName = "Daniel Ricciardo",
-                            Team = "McLaren"
+                            TeamId = 4
                         },
                         new
                         {
@@ -322,7 +324,7 @@ namespace Formula1.Migrations
                             Age = 36,
                             Country = "United Kingdom",
                             DriverName = "Lewis Hamilton",
-                            Team = "Mercedes"
+                            TeamId = 3
                         },
                         new
                         {
@@ -330,7 +332,7 @@ namespace Formula1.Migrations
                             Age = 31,
                             Country = "Finland",
                             DriverName = "Valtteri Bottas",
-                            Team = "Mercedes"
+                            TeamId = 3
                         },
                         new
                         {
@@ -338,7 +340,7 @@ namespace Formula1.Migrations
                             Age = 25,
                             Country = "France",
                             DriverName = "Pierre Gasly",
-                            Team = "AlphaTauri"
+                            TeamId = 7
                         },
                         new
                         {
@@ -346,7 +348,7 @@ namespace Formula1.Migrations
                             Age = 20,
                             Country = "Japan",
                             DriverName = "Yuki Tsunoda",
-                            Team = "AlphaTauri"
+                            TeamId = 7
                         },
                         new
                         {
@@ -354,7 +356,7 @@ namespace Formula1.Migrations
                             Age = 25,
                             Country = "France",
                             DriverName = "Lance Stroll",
-                            Team = "Aston Martin"
+                            TeamId = 10
                         },
                         new
                         {
@@ -362,7 +364,7 @@ namespace Formula1.Migrations
                             Age = 33,
                             Country = "Germany",
                             DriverName = "Sebastian Vettal",
-                            Team = "Aston Martin"
+                            TeamId = 10
                         },
                         new
                         {
@@ -370,7 +372,7 @@ namespace Formula1.Migrations
                             Age = 24,
                             Country = "France",
                             DriverName = "Esteban Ocon",
-                            Team = "Alpine"
+                            TeamId = 8
                         },
                         new
                         {
@@ -378,7 +380,7 @@ namespace Formula1.Migrations
                             Age = 39,
                             Country = "Spain",
                             DriverName = "Fernando Alonso",
-                            Team = "Alpine"
+                            TeamId = 1
                         },
                         new
                         {
@@ -386,7 +388,7 @@ namespace Formula1.Migrations
                             Age = 41,
                             Country = "Finland",
                             DriverName = "Kimi Räikkönen",
-                            Team = "Alfa Romeo Racing"
+                            TeamId = 9
                         },
                         new
                         {
@@ -394,7 +396,7 @@ namespace Formula1.Migrations
                             Age = 27,
                             Country = "Italy",
                             DriverName = "Antonio Giovinazzi",
-                            Team = "Alfa Romeo Racing"
+                            TeamId = 9
                         },
                         new
                         {
@@ -402,7 +404,7 @@ namespace Formula1.Migrations
                             Age = 25,
                             Country = "Canada",
                             DriverName = "Nicholas Latifi",
-                            Team = "Williams"
+                            TeamId = 6
                         },
                         new
                         {
@@ -410,7 +412,7 @@ namespace Formula1.Migrations
                             Age = 23,
                             Country = "United Kingdom",
                             DriverName = "Goerge Russel",
-                            Team = "Williams"
+                            TeamId = 6
                         },
                         new
                         {
@@ -418,7 +420,7 @@ namespace Formula1.Migrations
                             Age = 22,
                             Country = "Germany",
                             DriverName = "Mick Schumacher",
-                            Team = "Haas F1 Team"
+                            TeamId = 5
                         },
                         new
                         {
@@ -426,7 +428,7 @@ namespace Formula1.Migrations
                             Age = 22,
                             Country = "Russia",
                             DriverName = "Nikita Mazepin",
-                            Team = "Haas F1 Team"
+                            TeamId = 5
                         },
                         new
                         {
@@ -434,7 +436,7 @@ namespace Formula1.Migrations
                             Age = 31,
                             Country = "Mexico",
                             DriverName = "Sergio Perez",
-                            Team = "Red Bull Racing"
+                            TeamId = 1
                         });
                 });
 
@@ -683,6 +685,17 @@ namespace Formula1.Migrations
                     b.ToTable("TeamDrivers");
                 });
 
+            modelBuilder.Entity("Formula1.Models.Driver", b =>
+                {
+                    b.HasOne("Formula1.Models.Team", "Team")
+                        .WithMany("Drivers")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Team");
+                });
+
             modelBuilder.Entity("Formula1.Models.DriverCircuit", b =>
                 {
                     b.HasOne("Formula1.Models.Circuit", "Circuit")
@@ -722,7 +735,7 @@ namespace Formula1.Migrations
                         .IsRequired();
 
                     b.HasOne("Formula1.Models.Team", "Team")
-                        .WithMany("Drivers")
+                        .WithMany()
                         .HasForeignKey("TeamId1");
 
                     b.Navigation("Driver");

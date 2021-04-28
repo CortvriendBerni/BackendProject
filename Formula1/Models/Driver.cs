@@ -13,7 +13,8 @@ namespace Formula1.Models
         public string DriverName { get; set; }
         public int Age { get; set; }
         public string Country { get; set; }
-        public string Team { get; set; }
+        public int TeamId { get; set; }
+        public Team Team { get; set; }
         public Ranking Rank { get; set; }
         
         [JsonIgnore]
