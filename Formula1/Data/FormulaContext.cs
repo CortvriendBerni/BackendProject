@@ -15,7 +15,6 @@ namespace Formula1.Data
         public DbSet<DriverCircuit> DriverCircuits { get; set; }
         public DbSet<Ranking> Ranking { get; set; }
         public DbSet<Team> Teams { get; set; }
-        public DbSet<TeamDriver> TeamDrivers { get; set; }
         private ConnectionStrings _connectionStrings;
 
         public FormulaContext(DbContextOptions<FormulaContext> options, IOptions<ConnectionStrings> connectionStrings): base(options)
@@ -32,33 +31,11 @@ namespace Formula1.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DriverCircuit>().HasKey(cs => new { cs.DriverId, cs.CircuitId });
-            modelBuilder.Entity<TeamDriver>().HasKey(cs => new { cs.TeamId, cs.DriverId });
             
             modelBuilder.Entity<Driver>().HasOne<Ranking>(s => s.Rank).WithOne(ad => ad.Driver).HasForeignKey<Ranking>(ad => ad.DriverId);
             modelBuilder.Entity<Ranking>().HasOne<Driver>(ad => ad.Driver).WithOne(s => s.Rank).HasForeignKey<Ranking>(ad => ad.DriverId);
 
             modelBuilder.Entity<Driver>().HasOne<Team>(s => s.Team).WithMany(g => g.Drivers).HasForeignKey(s => s.TeamId);
-
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 33, DriverName = "Max Verstappen", Age = 23, Country = "Netherlands", Team = "Red Bull Racing"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 11, DriverName = "Sergio Perez", Age = 31, Country = "Mexico", Team = "Red Bull Racing"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 55, DriverName = "Carlos Sainz", Age = 26, Country = "Spain", Team = "Ferrari"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 16, DriverName = "Charles Leclerc", Age = 23, Country = "Monaco", Team = "Ferrari"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 4, DriverName = "Lando Norris", Age = 21, Country = "United Kingdom", Team = "McLaren"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 3, DriverName = "Daniel Ricciardo", Age = 31, Country = "Australia", Team = "McLaren"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 44, DriverName = "Lewis Hamilton", Age = 36, Country = "United Kingdom", Team = "Mercedes"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 77, DriverName = "Valtteri Bottas", Age = 31, Country = "Finland", Team = "Mercedes"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 10, DriverName = "Pierre Gasly", Age = 25, Country = "France", Team = "AlphaTauri"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 22, DriverName = "Yuki Tsunoda", Age = 20, Country = "Japan", Team = "AlphaTauri"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 18, DriverName = "Lance Stroll", Age = 25, Country = "France", Team = "Aston Martin"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 5, DriverName = "Sebastian Vettal", Age = 33, Country = "Germany", Team = "Aston Martin"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 31, DriverName = "Esteban Ocon", Age = 24, Country = "France", Team = "Alpine"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 14, DriverName = "Fernando Alonso", Age = 39, Country = "Spain", Team = "Alpine"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 7, DriverName = "Kimi Räikkönen", Age = 41, Country = "Finland", Team = "Alfa Romeo Racing"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 99, DriverName = "Antonio Giovinazzi", Age = 27, Country = "Italy", Team = "Alfa Romeo Racing"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 6, DriverName = "Nicholas Latifi", Age = 25, Country = "Canada", Team = "Williams"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 63, DriverName = "Goerge Russel", Age = 23, Country = "United Kingdom", Team = "Williams"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 47, DriverName = "Mick Schumacher", Age = 22, Country = "Germany", Team = "Haas F1 Team"});
-            // modelBuilder.Entity<Drivers>().HasData(new Drivers(){DriverId = Guid.NewGuid(), Number = 9, DriverName = "Nikita Mazepin", Age = 22, Country = "Russia", Team = "Haas F1 Team"});
 
             var maxVerstappen = new Driver(){DriverId = 33, DriverName = "Max Verstappen", Age = 23, Country = "Netherlands", TeamId = 1};
             var carlosSainz = new Driver(){DriverId = 55, DriverName = "Carlos Sainz", Age = 26, Country = "Spain", TeamId = 2};
@@ -76,7 +53,7 @@ namespace Formula1.Data
             var kimiRaikkonen = new Driver(){DriverId = 7, DriverName = "Kimi Räikkönen", Age = 41, Country = "Finland", TeamId = 9};
             var antonioGiovinazzi = new Driver(){DriverId = 99, DriverName = "Antonio Giovinazzi", Age = 27, Country = "Italy", TeamId = 9};
             var nacholasLatifi = new Driver(){DriverId = 6, DriverName = "Nicholas Latifi", Age = 25, Country = "Canada", TeamId = 6};
-            var georgeRussel = new Driver(){DriverId = 63, DriverName = "Goerge Russel", Age = 23, Country = "United Kingdom", TeamId = 6};
+            var georgeRussel = new Driver(){DriverId = 63, DriverName = "George Russel", Age = 23, Country = "United Kingdom", TeamId = 6};
             var mickSchumacher = new Driver(){DriverId = 47, DriverName = "Mick Schumacher", Age = 22, Country = "Germany", TeamId = 5};
             var nikitaMazepin = new Driver(){DriverId = 9, DriverName = "Nikita Mazepin", Age = 22, Country = "Russia", TeamId = 5};
             var sergioPerez = new Driver(){DriverId = 11, DriverName = "Sergio Perez", Age = 31, Country = "Mexico", TeamId = 1};
@@ -88,12 +65,12 @@ namespace Formula1.Data
             modelBuilder.Entity<Circuit>().HasData(new Circuit(){CircuitId = "bahrain", CircuitName = "Bahrain International Circuit", Country = "Bahrain", Url= "https://f1-circuits.nl/bahrain/"});
             modelBuilder.Entity<Circuit>().HasData(new Circuit(){CircuitId = "sochi", CircuitName = "Sochi Autodrom", Country = "Russia", Url= "https://f1-circuits.nl/sochi/"});
             modelBuilder.Entity<Circuit>().HasData(new Circuit(){CircuitId = "barcelonaCatalunya", CircuitName = "Circuit de Barcelona-Catalunya", Country = "Spain", Url= "https://f1-circuits.nl/barcelona/"});
-            modelBuilder.Entity<Circuit>().HasData(new Circuit(){CircuitId = "Monaco", CircuitName = "Circuit de Monaco", Country = "Monaco", Url= "https://f1-circuits.nl/monaco/"});
+            modelBuilder.Entity<Circuit>().HasData(new Circuit(){CircuitId = "monaco", CircuitName = "Circuit de Monaco", Country = "Monaco", Url= "https://f1-circuits.nl/monaco/"});
             modelBuilder.Entity<Circuit>().HasData(new Circuit(){CircuitId = "gillesVilleneuve", CircuitName = "Circuit Gilles Villeneuve", Country = "Canada", Url= "https://f1-circuits.nl/gilles-villeneuve/"});
             modelBuilder.Entity<Circuit>().HasData(new Circuit(){CircuitId = "baku", CircuitName = "Baku City Circuit", Country = "Azerbeidzjan", Url= "https://f1-circuits.nl/baku/"});
             modelBuilder.Entity<Circuit>().HasData(new Circuit(){CircuitId = "redBullRing", CircuitName = "Red Bull Ring", Country = "Austria", Url= "https://f1-circuits.nl/red-bull-ring/"});
-            modelBuilder.Entity<Circuit>().HasData(new Circuit(){CircuitId = "Silverstone", CircuitName = "Silverstone", Country = "United Kingdom", Url= "https://f1-circuits.nl/silverstone/"});
-            modelBuilder.Entity<Circuit>().HasData(new Circuit(){CircuitId = "Hungaroring", CircuitName = "Hungaroring", Country = "Hungary", Url= "https://f1-circuits.nl/hungaroring/"});
+            modelBuilder.Entity<Circuit>().HasData(new Circuit(){CircuitId = "silverstone", CircuitName = "Silverstone", Country = "United Kingdom", Url= "https://f1-circuits.nl/silverstone/"});
+            modelBuilder.Entity<Circuit>().HasData(new Circuit(){CircuitId = "hungaroring", CircuitName = "Hungaroring", Country = "Hungary", Url= "https://f1-circuits.nl/hungaroring/"});
             modelBuilder.Entity<Circuit>().HasData(new Circuit(){CircuitId = "spaFrancorchamps", CircuitName = "Circuit Spa-Francorchamps", Country = "Belgium", Url= "https://f1-circuits.nl/spa-francorchamps/"});
             modelBuilder.Entity<Circuit>().HasData(new Circuit(){CircuitId = "monza", CircuitName = "Autodromo Nazionale Monza", Country = "Italy", Url= "https://f1-circuits.nl/monza/"});
             modelBuilder.Entity<Circuit>().HasData(new Circuit(){CircuitId = "marinaBay", CircuitName = "Marina Bay Circuit", Country = "Singapore", Url= "https://f1-circuits.nl/marina-bay/"});
@@ -160,7 +137,48 @@ namespace Formula1.Data
             modelBuilder.Entity<Ranking>().HasData(new Ranking(){Place = 19, DriverId = 9, Points = 0});
             modelBuilder.Entity<Ranking>().HasData(new Ranking(){Place = 20, DriverId = 6, Points = 0});
 
-            // modelBuilder.Entity<List<TeamDrivers>>().HasData(new List<TeamDrivers>(){TeamId = Guid.NewGuid(), TeamName = "Aston Martin"});
+            // Seeding the many to many relationship
+
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 33, CircuitId = "spaFrancorchamps"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 33, CircuitId = "marinaBay"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 55, CircuitId = "marinaBay"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 55, CircuitId = "silverstone"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 16, CircuitId = "albertPark"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 16, CircuitId = "monaco"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 4, CircuitId = "spaFrancorchamps"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 4, CircuitId = "monaco"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 3, CircuitId = "silverstone"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 3, CircuitId = "monaco"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 44, CircuitId = "monaco"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 44, CircuitId = "americas"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 77, CircuitId = "monza"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 77, CircuitId = "bahrain"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 10, CircuitId = "suzuka"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 10, CircuitId = "bahrain"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 22, CircuitId = "sepang"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 22, CircuitId = "interlagos"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 18, CircuitId = "nurburging"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 18, CircuitId = "monza"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 5, CircuitId = "spaFrancorchamps"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 5, CircuitId = "suzuka"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 31, CircuitId = "interlagos"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 31, CircuitId = "marinaBay"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 14, CircuitId = "suzuka"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 14, CircuitId = "spaFrancorchamps"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 7, CircuitId = "vietnam"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 7, CircuitId = "mugello"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 99, CircuitId = "algarve"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 99, CircuitId = "vietnam"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 6, CircuitId = "spaFrancorchamps"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 6, CircuitId = "monaco"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 63, CircuitId = "bahrain"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 63, CircuitId = "monza"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 47, CircuitId = "monaco"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 47, CircuitId = "bahrain"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 9, CircuitId = "hermanosRodriguez"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 9, CircuitId = "zandvoort"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 11, CircuitId = "silverstone"});
+            modelBuilder.Entity<DriverCircuit>().HasData(new DriverCircuit(){DriverId = 11, CircuitId = "zandvoort"});
         }
     }
 }

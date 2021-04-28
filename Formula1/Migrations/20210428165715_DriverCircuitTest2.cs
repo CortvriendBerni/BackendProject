@@ -2,7 +2,7 @@
 
 namespace Formula1.Migrations
 {
-    public partial class TeamDriverTest : Migration
+    public partial class DriverCircuitTest2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -99,31 +99,6 @@ namespace Formula1.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "TeamDrivers",
-                columns: table => new
-                {
-                    DriverId = table.Column<int>(type: "int", nullable: false),
-                    TeamId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TeamId1 = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TeamDrivers", x => new { x.TeamId, x.DriverId });
-                    table.ForeignKey(
-                        name: "FK_TeamDrivers_Drivers_DriverId",
-                        column: x => x.DriverId,
-                        principalTable: "Drivers",
-                        principalColumn: "DriverId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TeamDrivers_Teams_TeamId1",
-                        column: x => x.TeamId1,
-                        principalTable: "Teams",
-                        principalColumn: "TeamId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.InsertData(
                 table: "Circuits",
                 columns: new[] { "CircuitId", "CircuitName", "Country", "Url" },
@@ -150,12 +125,12 @@ namespace Formula1.Migrations
                     { "bahrain", "Bahrain International Circuit", "Bahrain", "https://f1-circuits.nl/bahrain/" },
                     { "sepang", "Sepang International Circuit", "Malaysia", "https://f1-circuits.nl/sepang/" },
                     { "barcelonaCatalunya", "Circuit de Barcelona-Catalunya", "Spain", "https://f1-circuits.nl/barcelona/" },
-                    { "Monaco", "Circuit de Monaco", "Monaco", "https://f1-circuits.nl/monaco/" },
+                    { "monaco", "Circuit de Monaco", "Monaco", "https://f1-circuits.nl/monaco/" },
                     { "gillesVilleneuve", "Circuit Gilles Villeneuve", "Canada", "https://f1-circuits.nl/gilles-villeneuve/" },
                     { "sochi", "Sochi Autodrom", "Russia", "https://f1-circuits.nl/sochi/" },
                     { "redBullRing", "Red Bull Ring", "Austria", "https://f1-circuits.nl/red-bull-ring/" },
-                    { "Silverstone", "Silverstone", "United Kingdom", "https://f1-circuits.nl/silverstone/" },
-                    { "Hungaroring", "Hungaroring", "Hungary", "https://f1-circuits.nl/hungaroring/" },
+                    { "silverstone", "Silverstone", "United Kingdom", "https://f1-circuits.nl/silverstone/" },
+                    { "hungaroring", "Hungaroring", "Hungary", "https://f1-circuits.nl/hungaroring/" },
                     { "spaFrancorchamps", "Circuit Spa-Francorchamps", "Belgium", "https://f1-circuits.nl/spa-francorchamps/" },
                     { "monza", "Autodromo Nazionale Monza", "Italy", "https://f1-circuits.nl/monza/" },
                     { "baku", "Baku City Circuit", "Azerbeidzjan", "https://f1-circuits.nl/baku/" }
@@ -189,7 +164,7 @@ namespace Formula1.Migrations
                     { 31, 24, "France", "Esteban Ocon", 8 },
                     { 22, 20, "Japan", "Yuki Tsunoda", 7 },
                     { 10, 25, "France", "Pierre Gasly", 7 },
-                    { 63, 23, "United Kingdom", "Goerge Russel", 6 },
+                    { 63, 23, "United Kingdom", "George Russel", 6 },
                     { 6, 25, "Canada", "Nicholas Latifi", 6 },
                     { 9, 22, "Russia", "Nikita Mazepin", 5 },
                     { 47, 22, "Germany", "Mick Schumacher", 5 },
@@ -206,20 +181,73 @@ namespace Formula1.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "DriverCircuits",
+                columns: new[] { "CircuitId", "DriverId" },
+                values: new object[,]
+                {
+                    { "spaFrancorchamps", 33 },
+                    { "silverstone", 3 },
+                    { "monaco", 3 },
+                    { "mugello", 7 },
+                    { "monaco", 47 },
+                    { "bahrain", 47 },
+                    { "suzuka", 5 },
+                    { "hermanosRodriguez", 9 },
+                    { "zandvoort", 9 },
+                    { "vietnam", 7 },
+                    { "spaFrancorchamps", 6 },
+                    { "monaco", 6 },
+                    { "bahrain", 63 },
+                    { "monza", 63 },
+                    { "marinaBay", 31 },
+                    { "suzuka", 10 },
+                    { "bahrain", 10 },
+                    { "interlagos", 31 },
+                    { "monaco", 4 },
+                    { "sepang", 22 },
+                    { "spaFrancorchamps", 4 },
+                    { "bahrain", 77 },
+                    { "marinaBay", 33 },
+                    { "spaFrancorchamps", 5 },
+                    { "suzuka", 14 },
+                    { "spaFrancorchamps", 14 },
+                    { "silverstone", 11 },
+                    { "zandvoort", 11 },
+                    { "monza", 18 },
+                    { "algarve", 99 },
+                    { "silverstone", 55 },
+                    { "marinaBay", 55 },
+                    { "albertPark", 16 },
+                    { "monaco", 16 },
+                    { "monaco", 44 },
+                    { "americas", 44 },
+                    { "vietnam", 99 },
+                    { "monza", 77 },
+                    { "nurburging", 18 },
+                    { "interlagos", 22 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Ranking",
                 columns: new[] { "Place", "DriverId", "Points" },
                 values: new object[,]
                 {
-                    { 2, 33, 43 },
                     { 15, 99, 0 },
+                    { 12, 31, 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Ranking",
+                columns: new[] { "Place", "DriverId", "Points" },
+                values: new object[,]
+                {
+                    { 10, 18, 5 },
                     { 14, 7, 0 },
-                    { 12, 31, 2 },
-                    { 11, 22, 2 },
+                    { 18, 47, 0 },
                     { 9, 10, 6 },
                     { 16, 63, 0 },
                     { 20, 6, 0 },
                     { 19, 9, 0 },
-                    { 18, 47, 0 },
                     { 7, 3, 14 },
                     { 3, 4, 27 },
                     { 5, 77, 16 },
@@ -228,7 +256,8 @@ namespace Formula1.Migrations
                     { 6, 55, 14 },
                     { 8, 11, 10 },
                     { 13, 14, 1 },
-                    { 10, 18, 5 },
+                    { 2, 33, 43 },
+                    { 11, 22, 2 },
                     { 17, 5, 0 }
                 });
 
@@ -247,16 +276,6 @@ namespace Formula1.Migrations
                 table: "Ranking",
                 column: "DriverId",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TeamDrivers_DriverId",
-                table: "TeamDrivers",
-                column: "DriverId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TeamDrivers_TeamId1",
-                table: "TeamDrivers",
-                column: "TeamId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -266,9 +285,6 @@ namespace Formula1.Migrations
 
             migrationBuilder.DropTable(
                 name: "Ranking");
-
-            migrationBuilder.DropTable(
-                name: "TeamDrivers");
 
             migrationBuilder.DropTable(
                 name: "Circuits");

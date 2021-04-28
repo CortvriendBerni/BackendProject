@@ -16,8 +16,6 @@ namespace Formula1.Models
         public int TeamId { get; set; }
         public Team Team { get; set; }
         public Ranking Rank { get; set; }
-        
-        [JsonIgnore]
         public List<DriverCircuit> FavoriteCircuits { get; set; }
     }
 }
