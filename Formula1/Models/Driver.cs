@@ -14,7 +14,11 @@ namespace Formula1.Models
         public int Age { get; set; }
         public string Country { get; set; }
         public int TeamId { get; set; }
+        
+        [JsonIgnore]
         public Team Team { get; set; }
+
+        [JsonIgnore]
         public Ranking Rank { get; set; }
         public List<DriverCircuit> FavoriteCircuits { get; set; }
     }

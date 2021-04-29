@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Formula1.Configuration;
 using Formula1.Data;
+using Formula1.Repositories;
+using Formula1.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +33,13 @@ namespace Formula1
         {
             services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
             services.AddDbContext<FormulaContext>();
+
+            services.AddTransient<IFormulaContext, FormulaContext>();
+            services.AddTransient<IDriverRepository, DriverRepository>();
+            services.AddTransient<ICircuitRepository, CircuitRepository>();
+            services.AddTransient<IRankingRepository, RankingRepository>();
+            services.AddTransient<ITeamRepository, TeamRepository>();
+            services.AddTransient<IFormulaService, FormulaService>();
             
             services.AddControllers();
             services.AddAuthentication(options =>
