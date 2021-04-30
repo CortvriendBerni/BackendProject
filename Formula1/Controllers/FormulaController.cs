@@ -26,9 +26,27 @@ namespace Formula1.Controllers
         }
 
         [HttpGet]
+        [Route("/driver/{id}")]
+        public async Task<List<Driver>> GetDriver(int id){
+           return await _formulaService.GetDriver(id);
+        }
+
+        [HttpGet]
         [Route("/circuits")]
         public async Task<List<Circuit>> GetCircuits(){
            return await _formulaService.GetCircuits();
+        }
+
+        [HttpDelete]
+        [Route("/circuits/{CircuitId}")]
+        public async Task<List<Circuit>> DeleteCircuit(string CircuitId){
+           return await _formulaService.DeleteCircuit(CircuitId);
+        }
+
+        [HttpPost]
+        [Route("/circuit")]
+        public async Task<List<Circuit>> PostCircuit(Circuit circuit){
+           return await _formulaService.PostCircuit(circuit);
         }
 
         [HttpGet]
@@ -42,5 +60,11 @@ namespace Formula1.Controllers
         public async Task<List<Team>> GetTeams(){
            return await _formulaService.GetTeams();
         }
+
+      //   [HttpDelete]
+      //   [Route("/teams/{TeamId}")]
+      //   public async Task<List<Team>> DeleteTeam(int TeamId){
+      //      return await _formulaService.DeleteTeam(TeamId);
+      //   }
     }
 }
