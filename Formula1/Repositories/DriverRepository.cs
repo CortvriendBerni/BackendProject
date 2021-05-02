@@ -10,7 +10,7 @@ namespace Formula1.Repositories
 {
     public interface IDriverRepository
     {
-        Task<List<Driver>> GetDriver(int DriverId);
+        Task<Driver> GetDriver(int DriverId);
         Task<List<Driver>> GetDrivers();
     }
 
@@ -27,9 +27,9 @@ namespace Formula1.Repositories
             return await _context.Drivers.Include(m => m.FavoriteCircuits).ThenInclude(am => am.Circuit).ToListAsync();
         }
 
-        public async Task<List<Driver>> GetDriver(int DriverId)
+        public async Task<Driver> GetDriver(int DriverId)
         {
-            return await _context.Drivers.Where(m => m.DriverId == DriverId).Include(m => m.FavoriteCircuits).ThenInclude(am => am.Circuit).ToListAsync();
+            return await _context.Drivers.Where(m => m.DriverId == DriverId).Include(m => m.FavoriteCircuits).ThenInclude(am => am.Circuit).FirstOrDefaultAsync();
         }
     }
 }

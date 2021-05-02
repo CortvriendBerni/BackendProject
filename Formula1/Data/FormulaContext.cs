@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Formula1.Configuration;
 using Formula1.Models;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +17,7 @@ namespace Formula1.Data
         DbSet<DriverCircuit> DriverCircuits { get; set; }
         DbSet<Ranking> Ranking { get; set; }
         DbSet<Team> Teams { get; set; }
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 
     public class FormulaContext : DbContext, IFormulaContext

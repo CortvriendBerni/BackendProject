@@ -10,9 +10,10 @@ namespace Formula1.Repositories
 {
     public interface ICircuitRepository
     {
-        Task<List<Circuit>> DeleteCircuit(string CircuitId);
+        Task<Circuit> DeleteCircuit(string circuitId);
+        Task<Circuit> GetCircuit(string circuitId);
         Task<List<Circuit>> GetCircuits();
-        Task<List<Circuit>> PostCircuit(Circuit circuit);
+        Task<Circuit> PostCircuit(Circuit circuit);
     }
 
     public class CircuitRepository : ICircuitRepository
@@ -28,17 +29,24 @@ namespace Formula1.Repositories
             return await _context.Circuits.ToListAsync();
         }
 
-        public async Task<List<Circuit>> PostCircuit(Circuit circuit)
+        public async Task<Circuit> GetCircuit(string circuitId)
         {
-            var addCircuit = _context.Circuits.Add(circuit);
-            return await _context.Circuits.Where(m => m.CircuitId == circuit.CircuitId).ToListAsync();
+            return await _context.Circuits.Where(m => m.CircuitId == circuitId).FirstOrDefaultAsync();
         }
 
-        public async Task<List<Circuit>> DeleteCircuit(string CircuitId)
+        public async Task<Circuit> PostCircuit(Circuit circuit)
         {
-            Circuit Circuit = _context.Circuits.First(t => t.CircuitId == CircuitId);
+            await _context.Circuits.AddAsync(circuit);
+            await _context.SaveChangesAsync();
+            return circuit;
+        }
+
+        public async Task<Circuit> DeleteCircuit(string circuitId)
+        {
+            Circuit Circuit = await _context.Circuits.Where(m => m.CircuitId == circuitId).FirstOrDefaultAsync();
             _context.Circuits.Remove(Circuit);
-            return await _context.Circuits.Where(m => m.CircuitId == CircuitId).ToListAsync();
+            await _context.SaveChangesAsync();
+            return Circuit;
         }
     }
 }

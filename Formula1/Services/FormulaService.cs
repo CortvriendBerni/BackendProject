@@ -8,13 +8,14 @@ namespace Formula1.Services
 {
     public interface IFormulaService
     {
-        Task<List<Circuit>> DeleteCircuit(string CircuitId);
+        Task<Circuit> DeleteCircuit(string CircuitId);
+        Task<Circuit> GetCircuit(string circuitId);
         Task<List<Circuit>> GetCircuits();
-        Task<List<Driver>> GetDriver(int DriverId);
+        Task<Driver> GetDriver(int DriverId);
         Task<List<Driver>> GetDrivers();
         Task<List<Ranking>> GetRankings();
         Task<List<Team>> GetTeams();
-        Task<List<Circuit>> PostCircuit(Circuit circuit);
+        Task<Circuit> PostCircuit(Circuit circuit);
     }
 
     public class FormulaService : IFormulaService
@@ -37,7 +38,7 @@ namespace Formula1.Services
             return await _driverRepository.GetDrivers();
         }
 
-        public async Task<List<Driver>> GetDriver(int DriverId)
+        public async Task<Driver> GetDriver(int DriverId)
         {
             return await _driverRepository.GetDriver(DriverId);
         }
@@ -45,6 +46,21 @@ namespace Formula1.Services
         public async Task<List<Circuit>> GetCircuits()
         {
             return await _circuitRepository.GetCircuits();
+        }
+
+        public async Task<Circuit> GetCircuit(string circuitId)
+        {
+            return await _circuitRepository.GetCircuit(circuitId);
+        }
+
+        public async Task<Circuit> DeleteCircuit(string CircuitId)
+        {
+            return await _circuitRepository.DeleteCircuit(CircuitId);
+        }
+
+        public async Task<Circuit> PostCircuit(Circuit circuit)
+        {
+            return await _circuitRepository.PostCircuit(circuit);
         }
 
         public async Task<List<Ranking>> GetRankings()
@@ -61,16 +77,6 @@ namespace Formula1.Services
         // {
         //     return await _teamRepository.DeleteTeam(TeamId);
         // }
-
-        public async Task<List<Circuit>> DeleteCircuit(string CircuitId)
-        {
-            return await _circuitRepository.DeleteCircuit(CircuitId);
-        }
-
-        public async Task<List<Circuit>> PostCircuit(Circuit circuit)
-        {
-            return await _circuitRepository.PostCircuit(circuit);
-        }
 
     }
 }
