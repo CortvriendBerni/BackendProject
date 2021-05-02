@@ -14,6 +14,7 @@ namespace Formula1.Services
         Task<Driver> GetDriver(int DriverId);
         Task<List<Driver>> GetDrivers();
         Task<List<Ranking>> GetRankings();
+        Task<Team> GetTeam(int teamId);
         Task<List<Team>> GetTeams();
         Task<Circuit> PostCircuit(Circuit circuit);
     }
@@ -73,10 +74,9 @@ namespace Formula1.Services
             return await _teamRepository.GetTeams();
         }
 
-        // public async Task<List<Team>> DeleteTeam(int TeamId)
-        // {
-        //     return await _teamRepository.DeleteTeam(TeamId);
-        // }
-
+        public async Task<Team> GetTeam(int teamId)
+        {
+            return await _teamRepository.GetTeam(teamId);
+        }
     }
 }

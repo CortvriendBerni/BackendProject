@@ -66,5 +66,11 @@ namespace Formula1.Controllers
         public async Task<List<Team>> GetTeams(){
            return await _formulaService.GetTeams();
         }
+
+        [HttpGet]
+        [Route("/team/{id}")]
+        public async Task<Team> GetTeam(int id){
+           return await _formulaService.GetTeam(id);
+        }
     }
 }

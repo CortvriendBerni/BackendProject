@@ -23,7 +23,6 @@ namespace Formula1.Test
             Client = fixture.CreateClient();
         }
 
-
         [Fact]
         public async Task Test_ReturnsUnauthorizedResult() {
             // Arrange
@@ -40,21 +39,59 @@ namespace Formula1.Test
         }
 
         [Fact]
-        public async Task Test_Get_Brands_Should_Return_Ok()
+        public async Task Test_Get_Drivers_Should_Return_Ok()
         {
-            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjRJampQeE5wNmtobW5TVXQtZGU4VCJ9.eyJpc3MiOiJodHRwczovL2Rldi16c3JiMDM4ZS5ldS5hdXRoMC5jb20vIiwic3ViIjoiSUNtbFpvTXg5cWdaODJUb2NuOXNIYVo5TUdIQlBjcTRAY2xpZW50cyIsImF1ZCI6Imh0dHA6Ly9mb3JtdWxhMSIsImlhdCI6MTYxOTg3NzE5MywiZXhwIjoxNjE5OTYzNTkzLCJhenAiOiJJQ21sWm9NeDlxZ1o4MlRvY245c0hhWjlNR0hCUGNxNCIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.nQvrGusBfCN-b5v-CZGLbps303Ujj8KPQ16xlw2xl-6Qm8IY1w9J0EsrU1AnPC4oKXs3orP0BAmigN37VTefPuBnT3f6BvAALJgNdDLj4xLi1jZaxOKsYi4LKOUERgxwXOCvrYNRPhTlu_wS7MxcGaiW7Mqc0UiUs51yaWjyohWs5hSJaxKL-2nTLBsMUoS1Lih4le89FlmiSjx6QBmqm_qR4kbL_AmeArA38_43ZwJiaVjidiAxSFnTlunpQkOeVYLS_hrRd5D-Od111QLsJ-5lXUlg_sb-JblqeRKJxeqAsc62a_FVPijM_BJADDRYWpNw0-DD9jU4Dcrp6a40aQ");
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjRJampQeE5wNmtobW5TVXQtZGU4VCJ9.eyJpc3MiOiJodHRwczovL2Rldi16c3JiMDM4ZS5ldS5hdXRoMC5jb20vIiwic3ViIjoiSUNtbFpvTXg5cWdaODJUb2NuOXNIYVo5TUdIQlBjcTRAY2xpZW50cyIsImF1ZCI6Imh0dHA6Ly9mb3JtdWxhMSIsImlhdCI6MTYxOTk2NDAzOCwiZXhwIjoxNjIwMDUwNDM4LCJhenAiOiJJQ21sWm9NeDlxZ1o4MlRvY245c0hhWjlNR0hCUGNxNCIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.AXAjGIfEf3nMjRgb7qgxyDiVuHp0wDkwn1DnbdB70A49h2AHPYIlX61Qzs_Oiyh4KvEobLPltyUzHmlTSPYE2VeJ2dd9UkCwNhTnn3sDSciDMsiw7VVOsgwXQYC5gG6WRmUIHnySh0pw55V6MXxWPDUzW1_dGm1yG74KpiLCe8HXAwxj_8zBQlrKEzuHlOsWHZGPcNqNNY1yAFMOFcCmtsr8RxnJcIdRCH9UHStO34AZveDqw-aMje_wLS4uFah_mG2mAvLYhxaTFLE5hkrRTTz4sOkGDiZruwTNWbrV7ODUXnD5TcKkPnvsfXhTcPoLara2_H98b51Vi7JQZZCc1w");
             var response = await Client.GetAsync("/drivers");
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
 
             var drivers = JsonConvert.DeserializeObject<List<Driver>>(await response.Content.ReadAsStringAsync());
-            Assert.True(drivers.Count > 0);
+             // Er moeten altijd 20 drivers op de grid zijn
+            Assert.True(drivers.Count == 20);
+        }
+
+        [Fact]
+        public async Task Test_Get_Teams_Should_Return_Ok()
+        {
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjRJampQeE5wNmtobW5TVXQtZGU4VCJ9.eyJpc3MiOiJodHRwczovL2Rldi16c3JiMDM4ZS5ldS5hdXRoMC5jb20vIiwic3ViIjoiSUNtbFpvTXg5cWdaODJUb2NuOXNIYVo5TUdIQlBjcTRAY2xpZW50cyIsImF1ZCI6Imh0dHA6Ly9mb3JtdWxhMSIsImlhdCI6MTYxOTk2NDAzOCwiZXhwIjoxNjIwMDUwNDM4LCJhenAiOiJJQ21sWm9NeDlxZ1o4MlRvY245c0hhWjlNR0hCUGNxNCIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.AXAjGIfEf3nMjRgb7qgxyDiVuHp0wDkwn1DnbdB70A49h2AHPYIlX61Qzs_Oiyh4KvEobLPltyUzHmlTSPYE2VeJ2dd9UkCwNhTnn3sDSciDMsiw7VVOsgwXQYC5gG6WRmUIHnySh0pw55V6MXxWPDUzW1_dGm1yG74KpiLCe8HXAwxj_8zBQlrKEzuHlOsWHZGPcNqNNY1yAFMOFcCmtsr8RxnJcIdRCH9UHStO34AZveDqw-aMje_wLS4uFah_mG2mAvLYhxaTFLE5hkrRTTz4sOkGDiZruwTNWbrV7ODUXnD5TcKkPnvsfXhTcPoLara2_H98b51Vi7JQZZCc1w");
+            var response = await Client.GetAsync("/teams");
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var teams = JsonConvert.DeserializeObject<List<Team>>(await response.Content.ReadAsStringAsync());
+            Assert.True(teams.Count > 0);
+        }
+
+        [Fact]
+        public async Task Test_Get_Ranking_Should_Return_Ok()
+        {
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjRJampQeE5wNmtobW5TVXQtZGU4VCJ9.eyJpc3MiOiJodHRwczovL2Rldi16c3JiMDM4ZS5ldS5hdXRoMC5jb20vIiwic3ViIjoiSUNtbFpvTXg5cWdaODJUb2NuOXNIYVo5TUdIQlBjcTRAY2xpZW50cyIsImF1ZCI6Imh0dHA6Ly9mb3JtdWxhMSIsImlhdCI6MTYxOTk2NDAzOCwiZXhwIjoxNjIwMDUwNDM4LCJhenAiOiJJQ21sWm9NeDlxZ1o4MlRvY245c0hhWjlNR0hCUGNxNCIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.AXAjGIfEf3nMjRgb7qgxyDiVuHp0wDkwn1DnbdB70A49h2AHPYIlX61Qzs_Oiyh4KvEobLPltyUzHmlTSPYE2VeJ2dd9UkCwNhTnn3sDSciDMsiw7VVOsgwXQYC5gG6WRmUIHnySh0pw55V6MXxWPDUzW1_dGm1yG74KpiLCe8HXAwxj_8zBQlrKEzuHlOsWHZGPcNqNNY1yAFMOFcCmtsr8RxnJcIdRCH9UHStO34AZveDqw-aMje_wLS4uFah_mG2mAvLYhxaTFLE5hkrRTTz4sOkGDiZruwTNWbrV7ODUXnD5TcKkPnvsfXhTcPoLara2_H98b51Vi7JQZZCc1w");
+            var response = await Client.GetAsync("/ranking");
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var ranking = JsonConvert.DeserializeObject<List<Ranking>>(await response.Content.ReadAsStringAsync());
+            // Een ranking bevat alle drivers en dus ook 20 drivers
+            Assert.True(ranking.Count == 20);
+        }
+
+        [Fact]
+        public async Task Test_Get_Circuits_Should_Return_Ok()
+        {
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjRJampQeE5wNmtobW5TVXQtZGU4VCJ9.eyJpc3MiOiJodHRwczovL2Rldi16c3JiMDM4ZS5ldS5hdXRoMC5jb20vIiwic3ViIjoiSUNtbFpvTXg5cWdaODJUb2NuOXNIYVo5TUdIQlBjcTRAY2xpZW50cyIsImF1ZCI6Imh0dHA6Ly9mb3JtdWxhMSIsImlhdCI6MTYxOTk2NDAzOCwiZXhwIjoxNjIwMDUwNDM4LCJhenAiOiJJQ21sWm9NeDlxZ1o4MlRvY245c0hhWjlNR0hCUGNxNCIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.AXAjGIfEf3nMjRgb7qgxyDiVuHp0wDkwn1DnbdB70A49h2AHPYIlX61Qzs_Oiyh4KvEobLPltyUzHmlTSPYE2VeJ2dd9UkCwNhTnn3sDSciDMsiw7VVOsgwXQYC5gG6WRmUIHnySh0pw55V6MXxWPDUzW1_dGm1yG74KpiLCe8HXAwxj_8zBQlrKEzuHlOsWHZGPcNqNNY1yAFMOFcCmtsr8RxnJcIdRCH9UHStO34AZveDqw-aMje_wLS4uFah_mG2mAvLYhxaTFLE5hkrRTTz4sOkGDiZruwTNWbrV7ODUXnD5TcKkPnvsfXhTcPoLara2_H98b51Vi7JQZZCc1w");
+            var response = await Client.GetAsync("/circuits");
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var circuits = JsonConvert.DeserializeObject<List<Circuit>>(await response.Content.ReadAsStringAsync());
+            Assert.True(circuits.Count > 0);
         }
 
         [Fact]
         public async Task Test_Add_Circuit_Should_Return_Ok()
         {
-            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjRJampQeE5wNmtobW5TVXQtZGU4VCJ9.eyJpc3MiOiJodHRwczovL2Rldi16c3JiMDM4ZS5ldS5hdXRoMC5jb20vIiwic3ViIjoiSUNtbFpvTXg5cWdaODJUb2NuOXNIYVo5TUdIQlBjcTRAY2xpZW50cyIsImF1ZCI6Imh0dHA6Ly9mb3JtdWxhMSIsImlhdCI6MTYxOTg3NzE5MywiZXhwIjoxNjE5OTYzNTkzLCJhenAiOiJJQ21sWm9NeDlxZ1o4MlRvY245c0hhWjlNR0hCUGNxNCIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.nQvrGusBfCN-b5v-CZGLbps303Ujj8KPQ16xlw2xl-6Qm8IY1w9J0EsrU1AnPC4oKXs3orP0BAmigN37VTefPuBnT3f6BvAALJgNdDLj4xLi1jZaxOKsYi4LKOUERgxwXOCvrYNRPhTlu_wS7MxcGaiW7Mqc0UiUs51yaWjyohWs5hSJaxKL-2nTLBsMUoS1Lih4le89FlmiSjx6QBmqm_qR4kbL_AmeArA38_43ZwJiaVjidiAxSFnTlunpQkOeVYLS_hrRd5D-Od111QLsJ-5lXUlg_sb-JblqeRKJxeqAsc62a_FVPijM_BJADDRYWpNw0-DD9jU4Dcrp6a40aQ");
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjRJampQeE5wNmtobW5TVXQtZGU4VCJ9.eyJpc3MiOiJodHRwczovL2Rldi16c3JiMDM4ZS5ldS5hdXRoMC5jb20vIiwic3ViIjoiSUNtbFpvTXg5cWdaODJUb2NuOXNIYVo5TUdIQlBjcTRAY2xpZW50cyIsImF1ZCI6Imh0dHA6Ly9mb3JtdWxhMSIsImlhdCI6MTYxOTk2NDAzOCwiZXhwIjoxNjIwMDUwNDM4LCJhenAiOiJJQ21sWm9NeDlxZ1o4MlRvY245c0hhWjlNR0hCUGNxNCIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.AXAjGIfEf3nMjRgb7qgxyDiVuHp0wDkwn1DnbdB70A49h2AHPYIlX61Qzs_Oiyh4KvEobLPltyUzHmlTSPYE2VeJ2dd9UkCwNhTnn3sDSciDMsiw7VVOsgwXQYC5gG6WRmUIHnySh0pw55V6MXxWPDUzW1_dGm1yG74KpiLCe8HXAwxj_8zBQlrKEzuHlOsWHZGPcNqNNY1yAFMOFcCmtsr8RxnJcIdRCH9UHStO34AZveDqw-aMje_wLS4uFah_mG2mAvLYhxaTFLE5hkrRTTz4sOkGDiZruwTNWbrV7ODUXnD5TcKkPnvsfXhTcPoLara2_H98b51Vi7JQZZCc1w");
             
             var circuit = new Circuit()
             {
