@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Formula1.Configuration;
 using Formula1.Data;
@@ -52,9 +54,14 @@ namespace Formula1
                 options.Audience = "http://formula1";
             });
 
-            services.AddSwaggerGen(c =>
+            var xmlFile = "YourApi.XML ";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+            services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Formula1", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Formula1", Version = "v1" });
+
+                options.IncludeXmlComments(xmlPath);
             });
         }
 

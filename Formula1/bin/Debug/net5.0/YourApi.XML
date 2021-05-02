@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Formula1</name>
+    </assembly>
+    <members>
+        <member name="M:Formula1.Controllers.FormulaController.GetDrivers">
+            <summary>
+            Het ophalen van alle drivers
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Formula1.Controllers.FormulaController.GetDriver(System.Int32)">
+            <summary>
+            Het weergeven van een specifieke driver
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Formula1.Controllers.FormulaController.GetCircuits">
+            <summary>
+            Het ophalen van alle circuits
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Formula1.Controllers.FormulaController.GetCircuit(System.String)">
+            <summary>
+            Het ophalen van een specifiek circuit
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Formula1.Controllers.FormulaController.DeleteCircuit(System.String)">
+            <summary>
+            Een circuit verwijderen
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Formula1.Controllers.FormulaController.PostCircuit(Formula1.Models.Circuit)">
+            <summary>
+            Een circuit toevoegen
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Formula1.Controllers.FormulaController.GetRankings">
+            <summary>
+            Het ophalen van de ranking
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Formula1.Controllers.FormulaController.GetTeams">
+            <summary>
+            Het ophalen van de teams
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Formula1.Controllers.FormulaController.GetTeam(System.Int32)">
+            <summary>
+            Het ophalen van een specifiek team
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
